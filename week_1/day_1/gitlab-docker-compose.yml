@@ -1,0 +1,19 @@
+# To start Jenkins server: docker run -p 8080:8080 -p 50000:50000 --network day_1_default -v jenkins_home:/var/jenkins_home jenkins/jenkins
+
+version: "3.6"
+services:
+    web:
+        image: "gitlab/gitlab-ee:latest"
+        environment:
+            GITLAB_OMNIBUS_CONFIG: |
+                external_url 'http://localhost/'
+                # Add any other gitlab.rb configuration here, each on its own line
+        ports:
+            - "80:80"
+            - "443:443"
+            - "22:22"
+        volumes:
+            - "/tmp/config:/etc/gitlab"
+            - "/tmp/logs:/var/log/gitlab"
+            - "/tmp/data:/var/opt/gitlab"
+        shm_size: "256m"
